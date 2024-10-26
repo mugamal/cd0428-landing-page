@@ -1,9 +1,18 @@
 # Landing Page Project
 
-## Instructions
+## Project Description
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+The project implements a dynamic landing page using JS. The starter code forked from Udacity included the HTML and CSS for the static version of the landing page. The dynamic functionalities in `js/app.js` indluded: 
+1. Dynamic creation of navigation bar.
+2. Smooth transition between anchors and target sections.
+3. Highlighting the current active section. 
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Usage
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+This small project can be used as a tutorial to learn the functionalities mentioned in the description.
+
+## Dependencies
+
+1. `index.html` is the main html file.
+2. styles are found in `cc/styles.css`
+3. dynamic behavior is found in `js/app.js`.

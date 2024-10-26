@@ -1,62 +1,104 @@
-/**
- * 
- * Manipulating the DOM exercise.
- * Exercise programmatically builds navigation,
- * scrolls to anchors from navigation,
- * and highlights section in viewport upon scrolling.
- * 
- * Dependencies: None
- * 
- * JS Version: ES2015/ES6
- * 
- * JS Standard: ESlint
- * 
-*/
+// // /**
+// //  * 
+// //  * Manipulating the DOM exercise.
+// //  * Exercise programmatically builds navigation,
+// //  * scrolls to anchors from navigation,
+// //  * and highlights section in viewport upon scrolling.
+// //  * 
+// //  * Dependencies: None
+// //  * 
+// //  * JS Version: ES2015/ES6
+// //  * 
+// //  * JS Standard: ESlint
+// //  * 
+// // */
 
-/**
- * Comments should be present at the beginning of each procedure and class.
- * Great to have comments before crucial code sections within the procedure.
-*/
+// * Define Global Variables
+let sectionNames = [];
+// * End Global Variables
 
-/**
- * Define Global Variables
- * 
-*/
+// * Start Helper Functions
 
+// // Extract Section Names that have data-nav attribute
+function extractSectionNames() {
+  const sections = document.querySelectorAll('section');
+  sectionNames = []; // Clear the array for each call
 
-/**
- * End Global Variables
- * Start Helper Functions
- * 
-*/
+  sections.forEach(section => {
+    const dataNav = section.getAttribute('data-nav');
+    if (dataNav) {
+      sectionNames.push(dataNav);
+    }
+  });
+}
+// * End Helper Functions
 
+// * Begin Main Functions
 
+// // Build the navigation
+function buildNavbar() {
+  const navbarList = document.getElementById('navbar__list');
+  sectionNames.forEach(name => {
+    const listItem = document.createElement('li');
+    const anchor = document.createElement('a');
+    const sectionId = name.toLowerCase().replace(/\s+/g, '');
+    anchor.href = `#${sectionId}`;
+    anchor.textContent = name;
+    listItem.appendChild(anchor);
+    navbarList.appendChild(listItem);
+  });
+}
 
-/**
- * End Helper Functions
- * Begin Main Functions
- * 
-*/
+// // Add class 'active' to section when near top of viewport
+function setActiveSections() {
+  const sections = document.querySelectorAll('section');
+  const activeClass = 'your-active-class'; // Replace with your desired class name
+  const offset = 150; // Adjust this offset value as needed
 
-// build the nav
+  sections.forEach(section => {
+    const box = section.getBoundingClientRect();
+    if (box.top <= offset && box.bottom >= offset) {
+      section.classList.add(activeClass);
+    } else {
+      section.classList.remove(activeClass);
+    }
+  });
+}
 
+// Scroll to anchor ID using scrollTo event
+function scrollToSection(targetId) {
+  const targetElement = document.querySelector(targetId);
 
-// Add class 'active' to section when near top of viewport
+  if (targetElement) {
+    window.scrollTo({
+      top: targetElement.offsetTop,
+      behavior: 'smooth'
+    });
+  }
+}
+// * End Main Functions
 
-
-// Scroll to anchor ID using scrollTO event
-
-
-/**
- * End Main Functions
- * Begin Events
- * 
-*/
+// * Begin Events
 
 // Build menu 
+window.addEventListener('DOMContentLoaded', () => {
+  extractSectionNames();
+  buildNavbar();
 
-// Scroll to section on link click
+  // Scroll to section on link click
+  const smoothScrollLinks = document.querySelectorAll('a[href^="#"]');
 
-// Set sections as active
+  smoothScrollLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent default link behavior
 
+      const targetId = this.getAttribute('href');
+      scrollToSection(targetId); // Use the scrollToSection function for smooth scrolling
+    });
+  });
+
+  // Set sections as active
+  document.addEventListener("scroll", setActiveSections);
+});
+// * End Events
 
